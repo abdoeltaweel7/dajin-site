@@ -13,6 +13,9 @@ const LogoProcessor = () => {
         
         // Load the raw logo
         const response = await fetch(rawLogoUrl);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch logo: ${response.status} ${response.statusText}`);
+        }
         const blob = await response.blob();
         const img = await loadImage(blob);
         
