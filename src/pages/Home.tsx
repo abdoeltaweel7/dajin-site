@@ -16,9 +16,15 @@ const Home = () => {
     const loadServices = async () => {
       try {
         const response = await axios.get('/api/services');
-        setHighlightedServices(response.data.filter((s: any) => s.active && s.highlighted));
+        if (Array.isArray(response.data)) {
+          setHighlightedServices(response.data.filter((s: any) => s.active && s.highlighted));
+        } else {
+          console.error('API response is not an array:', response.data);
+          setHighlightedServices([]);
+        }
       } catch (error) {
         console.error('Error loading services:', error);
+        setHighlightedServices([]);
       }
     };
     loadServices();
