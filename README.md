@@ -49,8 +49,8 @@ Git
 
 ### 1. استنساخ المشروع
 ```bash
-git clone https://github.com/YOUR_USERNAME/dajin-web-forge.git
-cd dajin-web-forge
+git clone https://github.com/abdelrahman-eltaweel/dajin-site.git
+cd dajin-site
 ```
 
 ### 2. تثبيت التبعيات
