@@ -49,7 +49,7 @@ Git
 
 ### 1. استنساخ المشروع
 ```bash
-git clone https://github.com/abdelrahman-eltaweel/dajin-site.git
+git clone https://github.com/abdoeltaweel7/dajin-site.git
 cd dajin-site
 ```
 
