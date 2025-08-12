@@ -24,7 +24,7 @@ const LogoProcessor = () => {
       } catch (error) {
         console.error('Error processing logo:', error);
         // Fallback to original image
-        setProcessedLogo(rawLogoUrl);
+        setProcessedLogo(null);
       } finally {
         setIsProcessing(false);
       }
