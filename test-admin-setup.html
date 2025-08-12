@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Setup Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .danger {
+            background: #dc3545;
+        }
+        .danger:hover {
+            background: #c82333;
+        }
+        .success {
+            color: #28a745;
+        }
+        .error {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Account Setup Test</h1>
+    
+    <div class="test-section">
+        <h2>Current Status</h2>
+        <div id="status">
+            <p>Checking admin configuration...</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test Actions</h2>
+        <button onclick="clearAdmin()">Clear Admin Setup (Reset)</button>
+        <button onclick="checkStatus()">Check Status</button>
+        <button onclick="showCredentials()">Show Stored Credentials</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Instructions</h2>
+        <ol>
+            <li>Click "Clear Admin Setup" to reset the system</li>
+            <li>Visit <a href="/admin/login" target="_blank">/admin/login</a> to set up your admin account</li>
+            <li>Use any email and password (min 6 characters) for first-time setup</li>
+            <li>After setup, you can change credentials in Settings > Admin tab</li>
+            <li>All fake data has been removed - you'll start with empty states</li>
+        </ol>
+    </div>
+
+    <script>
+        function checkStatus() {
+            const adminConfigured = localStorage.getItem("adminConfigured");
+            const adminCredentials = localStorage.getItem("adminCredentials");
+            const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
+            const adminEmail = localStorage.getItem("adminEmail");
+            
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `
+                <p><strong>Admin Configured:</strong> ${adminConfigured ? '✅ Yes' : '❌ No'}</p>
+                <p><strong>Admin Logged In:</strong> ${isLoggedIn ? '✅ Yes' : '❌ No'}</p>
+                <p><strong>Admin Email:</strong> ${adminEmail || 'Not set'}</p>
+                <p><strong>Credentials Stored:</strong> ${adminCredentials ? '✅ Yes' : '❌ No'}</p>
+            `;
+        }
+        
+        function clearAdmin() {
+            if (confirm('Are you sure you want to clear all admin data? This will reset the system.')) {
+                localStorage.removeItem("adminConfigured");
+                localStorage.removeItem("adminCredentials");
+                localStorage.removeItem("isAdminLoggedIn");
+                localStorage.removeItem("adminEmail");
+                alert('Admin data cleared! The system is now ready for fresh setup.');
+                checkStatus();
+            }
+        }
+        
+        function showCredentials() {
+            const credentials = localStorage.getItem("adminCredentials");
+            if (credentials) {
+                const data = JSON.parse(credentials);
+                alert(`Admin Email: ${data.email}\nCreated: ${data.createdAt}\nUpdated: ${data.updatedAt || 'Never'}`);
+            } else {
+                alert('No admin credentials found. System needs setup.');
+            }
+        }
+        
+        // Check status on page load
+        checkStatus();
+    </script>
+</body>
+</html>

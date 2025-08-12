@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Connection</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Supabase Connection Test</h1>
+    <button onclick="testConnection()">Test Connection</button>
+    <button onclick="testInsert()">Test Insert</button>
+    <div id="results"></div>
+
+    <script>
+        const SUPABASE_URL = 'https://ipzupceovfjmguhjmnkr.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwenVwY2VvdmZqbWd1aGptbmtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUwMTA5MjIsImV4cCI6MjA3MDU4NjkyMn0.PgNNlxueS3ylPyOwkuoA4pODnHxvIGk8ZQen6LDDRdk';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        async function testConnection() {
+            try {
+                const { data, error } = await supabase.from('services').select('*').limit(1);
+                if (error) throw error;
+                document.getElementById('results').innerHTML = 'Connection successful! Data: ' + JSON.stringify(data);
+            } catch (err) {
+                document.getElementById('results').innerHTML = 'Connection failed: ' + err.message;
+                console.error(err);
+            }
+        }
+        
+        async function testInsert() {
+            try {
+                const testData = {
+                    title: 'Test Service',
+                    description: 'Test Description', 
+                    price: 100,
+                    category: 'Development'
+                };
+                
+                const { data, error } = await supabase
+                    .from('services')
+                    .insert([testData])
+                    .select();
+                    
+                if (error) throw error;
+                document.getElementById('results').innerHTML = 'Insert successful! Data: ' + JSON.stringify(data);
+            } catch (err) {
+                document.getElementById('results').innerHTML = 'Insert failed: ' + err.message;
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>
